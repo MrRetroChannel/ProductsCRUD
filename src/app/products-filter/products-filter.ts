@@ -1,12 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
 
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, combineLatest, debounceTime, skip, Subject, takeUntil } from 'rxjs';
@@ -26,17 +22,7 @@ export type ProductsFilter = {
   selector: 'products-filter',
   templateUrl: './products-filter.html',
   styleUrl: './products-filter.scss',
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatSliderModule,
-    MatIconModule,
-    MatSelectModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatButtonModule,
-  ],
+  imports: [FormsModule, MatIconModule, MatSelectModule, MatInputModule, MatButtonModule],
 })
 export class ProductsFilterComponent implements OnInit, OnDestroy {
   @Input()

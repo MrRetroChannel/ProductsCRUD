@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import {
   FormBuilder,
@@ -26,7 +25,6 @@ export type ProductEditData = {
   templateUrl: './product-edit-dialog.template.html',
   styleUrl: './product-edit-dialog.style.scss',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatButtonModule,
