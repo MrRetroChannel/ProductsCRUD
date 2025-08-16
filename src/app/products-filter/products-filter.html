@@ -1,0 +1,83 @@
+<div class="filter-container">
+  @if (activeFilter) {
+  <button class="filter-reset" mat-icon-button (click)="resetFilter()">
+    <mat-icon fontIcon="filter_list_off" />
+  </button>
+  }
+  <mat-form-field appearance="outline">
+    <mat-label>Название</mat-label>
+    <input
+      name="name"
+      matInput
+      placeholder="Поиск по названию"
+      [ngModel]="nameSubject.value"
+      (ngModelChange)="nameSubject.next($event)"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Все Категории</mat-label>
+    <mat-select
+      name="category"
+      [ngModel]="categorySubject.value"
+      (ngModelChange)="categorySubject.next($event)"
+      multiple
+    >
+      @for (category of categories; track category.id) {
+      <mat-option [value]="category">{{ category.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="price-filter">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        name="lowerPrice"
+        type="number"
+        placeholder="Цена от"
+        [min]="0"
+        [max]="maxPrice"
+        [ngModel]="lowerPriceSubject.value"
+        (ngModelChange)="lowerPriceSubject.next($event)"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        name="upperPrice"
+        type="number"
+        placeholder="Цена до"
+        [min]="lowerPriceSubject.value || 0"
+        [max]="maxPrice"
+        [ngModel]="upperPriceSubject.value"
+        (ngModelChange)="upperPriceSubject.next($event)"
+      />
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Наличие</mat-label>
+    <mat-select [ngModel]="stockSubject.value" (ngModelChange)="stockSubject.next($event)">
+      <mat-option [value]="0">Все</mat-option>
+      <mat-option [value]="1">В наличии</mat-option>
+      <mat-option [value]="2">Нет в наличии</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="rating-filter">
+    <label>Рейтинг</label>
+    <div class="stars-container">
+      @for (star of [].constructor(5); track $index) {
+      <mat-icon
+        (click)="ratingSubject.next($index + 1)"
+        (mouseenter)="hoveredStars = $index + 1"
+        (mouseleave)="hoveredStars = 0"
+        fontIcon="star"
+        class="star"
+        [class.filled]="ratingSubject.getValue() > $index || hoveredStars > $index"
+      />
+      }
+    </div>
+  </div>
+</div>

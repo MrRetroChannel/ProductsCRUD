@@ -1,0 +1,100 @@
+<div class="table-header">
+  <button mat-raised-button class="add-button" (click)="editProduct()">
+    <mat-icon fontIcon="add_box" /> Добавить Товар
+  </button>
+
+  <products-filter [maxPrice]="maxPrice" (filter)="onFilterChange($event)" />
+</div>
+
+<div class="table-container">
+  <mat-table
+    matSort
+    class="products-table"
+    [dataSource]="productsDataSource"
+    (matSortChange)="sortProducts($event)"
+  >
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Id</b></mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.id }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Название</b></mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Цена</b></mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        {{ product.price | currency : 'RUB' : 'symbol-narrow' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Категория</b></mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.category?.name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="stock">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Количество</b></mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <mat-icon
+          [class.no-products-icon]="product.stock === null || product.stock === 0"
+          [class.has-products-icon]="product.stock > 0"
+          fontIcon="fiber_manual_record"
+        />
+        {{ product.stock || 0 }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rating">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b>Рейтинг</b></mat-header-cell>
+      <mat-cell *matCellDef="let product" class="rating-cell">
+        <div class="rating-stars">
+          @for (star of product.rating | starsRating; track $index) {
+          <mat-icon [fontIcon]="star" />
+          }
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef><b>Описание</b></mat-header-cell>
+      <mat-cell *matCellDef="let product" class="description-cell">
+        {{ product.description }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let product" class="products-table-actions">
+        <button
+          mat-mini-fab
+          (click)="editProduct(product)"
+          matTooltip="Редактировать"
+          class="edit-button"
+        >
+          <mat-icon fontIcon="edit" />
+        </button>
+        <button
+          mat-mini-fab
+          (click)="deleteProduct(product)"
+          matTooltip="Удалить"
+          class="delete-button"
+        >
+          <mat-icon fontIcon="delete" />
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns" />
+    <mat-row *matRowDef="let row; columns: displayedColumns" />
+  </mat-table>
+
+  <mat-paginator
+    #paginator
+    [pageSizeOptions]="[5, 10, 20, 50]"
+    [pageSize]="10"
+    showFirstLastButtons
+  />
+</div>
