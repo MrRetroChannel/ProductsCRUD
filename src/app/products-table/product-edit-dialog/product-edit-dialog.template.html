@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>{{ data ? 'Редактировать товар' : 'Добавить товар' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-container">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Название</mat-label>
+        <input matInput formControlName="name" placeholder="Введите название товара" />
+
+        @if (form.get('name')?.hasError('required')) {
+        <mat-error> Название обязательно для заполнения </mat-error>
+        } @else if (form.get('name')?.hasError('uniqueName')) {
+        <mat-error> Название товара должно быть уникальным </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Цена</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="price"
+          placeholder="0.00"
+          step="0.01"
+          min="0"
+        />
+
+        @if (form.get('price')?.hasError('required')) {
+        <mat-error> Цена обязательна для заполнения </mat-error>
+        } @else if (form.get('price')?.hasError('min')) {
+        <mat-error> Цена должна быть больше 0 </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Категория</mat-label>
+        <mat-select formControlName="category" [compareWith]="categoryCompareFn">
+          @for (category of data.categories; track category.id) {
+          <mat-option [value]="category">{{ category.name }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('category')?.hasError('required')) {
+        <mat-error> Категория обязательна для выбора </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Количество на складе</mat-label>
+        <input matInput type="number" formControlName="stock" placeholder="0" min="0" />
+        @if (form.get('stock')?.hasError('pattern')) {
+        <mat-error> Количество должно быть целым числом </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Описание</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          placeholder="Введите описание товара"
+          rows="3"
+        ></textarea>
+        @if (form.get('description')?.hasError('required')) {
+        <mat-error> Описание обязательно для заполнения </mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="dialogRef.close()">Отмена</button>
+    <button mat-raised-button type="submit" [disabled]="form.invalid">
+      {{ data ? 'Сохранить' : 'Добавить' }}
+    </button>
+  </mat-dialog-actions>
+</form>
