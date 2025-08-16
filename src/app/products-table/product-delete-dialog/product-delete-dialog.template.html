@@ -1,0 +1,21 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon fontIcon="warning" class="warning-icon" /> Подтверждение удаления
+</h2>
+
+<mat-dialog-content>
+  <p class="confirmation-text">
+    Вы уверены, что хотите удалить товар <b>"{{ data.name }}"</b>?
+  </p>
+  <p class="warning-text">
+    <mat-icon fontIcon="info" />
+    Это действие нельзя будет отменить.
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Отмена</button>
+  <button class="delete-button" mat-raised-button color="warn" (click)="dialogRef.close(true)">
+    <mat-icon fontIcon="delete" />
+    Удалить
+  </button>
+</mat-dialog-actions>

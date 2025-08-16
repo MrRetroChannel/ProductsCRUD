@@ -1,0 +1,29 @@
+.delete-button {
+  background-color: #fd1e1e;
+  color: white;
+}
+
+.warning-icon {
+  color: #ff9800;
+  margin-right: 8px;
+}
+
+.confirmation-text {
+  font-size: 16px;
+}
+
+.dialog-title {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.warning-text {
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    font-size: 20px;
+    margin-right: 5px;
+  }
+}
