@@ -55,3 +55,15 @@ $dot-scale: 0.3;
   transform: scale($dot-scale);
   color: green;
 }
+
+.mat-column-id {
+  max-width: 60px;
+}
+
+.mat-column-description {
+  min-width: 400px;
+}
+
+.mat-column-actions {
+  max-width: 125px;
+}
